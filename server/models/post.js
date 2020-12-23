@@ -6,7 +6,7 @@ const postSchema = new Schema({
         type: String,
         required: true
     } ,
-    messgae: {
+    message: {
         type: String,
         required: true
     },

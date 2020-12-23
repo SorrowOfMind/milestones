@@ -7,11 +7,11 @@ const postsRoutes = require('./routes/postsRoutes');
 
 const app = express();
 
-app.use('/posts', postsRoutes);
-
 app.use(bodyParser.json({linit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({linit: "30mb", extended: true}));
 app.use(cors());
+
+app.use('/posts', postsRoutes);
 
 const PORT = process.env.PORT || 5000;
 const uri = process.env.MONGO_URI;
