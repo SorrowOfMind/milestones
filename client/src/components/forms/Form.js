@@ -19,8 +19,10 @@ const Form = () => {
     const handleSubmit = e => {
         e.preventDefault();
         if (post.creator && post.title && post.message){
+            const tags = post.tags.split(', ');
+            setPost({...post, tags});
             dispatch(createPost(post));
-            // clearInputs();
+            clearInputs();
         }
     }
 
