@@ -1,3 +1,4 @@
+const { Mongoose } = require('mongoose');
 const Post = require('../models/post');
 
 const getPosts = async (req, res) => {
@@ -21,4 +22,15 @@ const createPost = async (req, res) => {
     }
 }
 
-module.exports = {getPosts, createPost}
+const editPost = async (req, res) => {
+    const {id: _id} = req.params;
+    const post = req.body;
+
+    if (!Mongoose.Types.ObjectId.isValid(_id)) res.status(404).send("Unrecognized id");
+
+    const updatedPost = await Post.findByIdAndUpdate(_id, post, {new: true});
+
+    res.json(updatedPost);
+}
+
+module.exports = {getPosts, createPost, editPost}
