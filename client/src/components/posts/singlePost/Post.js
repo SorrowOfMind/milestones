@@ -26,7 +26,7 @@ const Post = ({post}) => {
             <CardContent>
                 <Typography className={classes.title} variant="h5" gutterBottom>{post.message}</Typography>
             </CardContent>
-            <CardActions className={classes.actions}>
+            <CardActions className={classes.actions} display="flex">
                 <Button coolor="primary" size="small">
                     <ThumbUpAltIcon fontSize="small"/>
                     Like {post.likeCount}
