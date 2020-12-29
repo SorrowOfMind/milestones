@@ -1,13 +1,17 @@
-const initState = [];
+const initState = {
+    allPosts: [],
+    currentPost: ''
+};
 
 const postReducer = (state = initState, action) => {
     switch(action.type){
         case 'FETCH_ALL':
-            console.log(action.payload);
-            return action.payload;
+            let fetchedPosts = action.payload;
+            return {...state, allPosts: fetchedPosts};
         case 'CREATE_POST':
-            console.log(action.payload);
-            return [...state, action.payload];
+            return {...state, allPosts: [...state.allPosts, action.payload]};
+        case 'EDIT_POST_ID':
+            return {...state, currentPost: action.payload}
         default:
             return state;
     }
