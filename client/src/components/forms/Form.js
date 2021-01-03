@@ -19,20 +19,21 @@ const Form = () => {
     const currentPost = useSelector(state => currentId ? state.posts.allPosts.find(post => post._id === currentId) : null);
 
     useEffect(() => {
-        if (currentId){
-            setPost(currentPost);
-        }
-    }, [currentId]);
+        if (currentId) setPost(currentPost);
+    }, [currentId, currentPost]);
     
     const handleSubmit = e => {
         e.preventDefault();
-        if (currentId){
-            dispatch(updatePost(currentId, post));
-        }
+        
         if (post.creator && post.title && post.message){
-            const tags = post.tags.split(', ');
-            setPost({...post, tags});
-            dispatch(createPost(post));
+            if (currentId){
+                dispatch(updatePost(currentId, post));
+                dispatch({type: 'RESET_POST_ID'});
+            } else {
+                // const tags = post.tags.split(',');
+                // setPost({...post, tags});
+                dispatch(createPost(post));
+            }
             clearInputs();
         }
     }
@@ -58,7 +59,7 @@ const Form = () => {
                 className={`${classes.form} ${classes.root}`}
                 onSubmit={handleSubmit}
             >
-                <Typography variant="h6">Create a new milestone</Typography>
+                <Typography variant="h6">{currentId ? "Edit a milestone" : "Create a new milestone"}</Typography>
                 <TextField 
                     name="creator" 
                     variant="outlined" 

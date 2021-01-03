@@ -4,15 +4,16 @@ import photo from './assets/photo.png';
 import Posts from './components/posts/Posts';
 import Form from './components/forms/Form';
 import useStyles from './styles';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getPosts} from './store/actions/postActions';
 import './index.css';
 
 function App() {
+  const currentId = useSelector(state => state.posts.currentPost) || null;
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  useEffect(() => dispatch(getPosts()), [dispatch]);
+  useEffect(() => dispatch(getPosts()), [dispatch, currentId]);
 
   return (
     <Container maxwidth="lg">
