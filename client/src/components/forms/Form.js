@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import useStyles from './styles';
 import {TextField, Button, Typography, Paper} from '@material-ui/core';
 import FileBase from 'react-file-base64';
-import {createPost} from '../../store/actions/postActions';
+import {createPost, updatePost} from '../../store/actions/postActions';
 
 const Form = () => {
     const [post, setPost] = useState({
@@ -15,9 +15,20 @@ const Form = () => {
     });
     const classes = useStyles();
     const dispatch = useDispatch();
+    const currentId = useSelector(state => state.posts.currentPost) || null;
+    const currentPost = useSelector(state => currentId ? state.posts.allPosts.find(post => post._id === currentId) : null);
+
+    useEffect(() => {
+        if (currentId){
+            setPost(currentPost);
+        }
+    }, [currentId]);
     
     const handleSubmit = e => {
         e.preventDefault();
+        if (currentId){
+            dispatch(updatePost(currentId, post));
+        }
         if (post.creator && post.title && post.message){
             const tags = post.tags.split(', ');
             setPost({...post, tags});
