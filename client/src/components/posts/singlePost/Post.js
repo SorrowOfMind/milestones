@@ -6,6 +6,7 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
+import {deletePost} from '../../../store/actions/postActions';
 
 const Post = ({post}) => {
     const [currentId, setCurrentId] = useState(post._id);
@@ -18,6 +19,10 @@ const Post = ({post}) => {
         } catch (error) {
             console.log(error.message);
         }
+    }
+
+    const handleDelete = id => {
+        dispatch(deletePost(id));
     }
 
     return (
@@ -48,7 +53,7 @@ const Post = ({post}) => {
                     <ThumbUpAltIcon fontSize="small"/>
                     Like {post.likeCount}
                 </Button>
-                <Button coolor="primary" size="small">
+                <Button coolor="primary" size="small" onClick={() => handleDelete(post._id)}>
                     <DeleteIcon fontSize="small"/>
                     Delete
                 </Button>
