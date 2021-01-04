@@ -16,7 +16,10 @@ const postReducer = (state = initState, action) => {
             return {...state, currentPost: ''}
         case 'UPDATE_POST':
             let updatedPosts = state.allPosts.map(post => post._id === action.payload._id ? action.payload: post);
-            return {...state, allPosts: updatedPosts}
+            return {...state, allPosts: updatedPosts};
+        case 'DELETE_POST':
+            let filteredPosts = state.allPosts.filter(post => post._id !== action.payload);
+            return {...state, allPosts: filteredPosts};
         default:
             return state;
     }

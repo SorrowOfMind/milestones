@@ -27,11 +27,29 @@ const editPost = async (req, res) => {
     const {title, message, creator, selectedFile, tags} = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(id)) res.status(404).send("Unrecognized id");
-
     const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
-    await Post.findByIdAndUpdate(id, updatedPost, { new: true });
 
-    res.json(updatedPost);
+    try {
+        await Post.findByIdAndUpdate(id, updatedPost, { new: true });
+        res.status(200).json(updatedPost);
+    } catch (error) {
+        console.log(error.message);
+        res.status(409).json({message: error.message});
+    }
 }
 
-module.exports = {getPosts, createPost, editPost}
+const deletePost = async (req, res) => {
+    const {id} = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) res.status(404).send("Unrecognized id");
+
+    try {
+        await Post.findByIdAndRemove(id);
+        res.status(200).json({message: 'Milestone deleted'});
+    } catch (error) {
+        console.log(error.message);
+        res.status(409).json({message: error.message});
+    }
+}
+
+module.exports = {getPosts, createPost, editPost, deletePost}
