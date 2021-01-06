@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import useStyles from './styles';
 import {useDispatch} from 'react-redux';
 import {Card, CardActions, CardContent, CardMedia, Button, Typography} from '@material-ui/core';
@@ -6,10 +6,9 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
-import {deletePost} from '../../../store/actions/postActions';
+import {deletePost, likePost} from '../../../store/actions/postActions';
 
 const Post = ({post}) => {
-    const [currentId, setCurrentId] = useState(post._id);
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -21,9 +20,8 @@ const Post = ({post}) => {
         }
     }
 
-    const handleDelete = id => {
-        dispatch(deletePost(id));
-    }
+    const handleDelete = id => dispatch(deletePost(id));
+    const handleLike = id => dispatch(likePost(id));
 
     return (
         <Card className={classes.card}>
@@ -36,7 +34,7 @@ const Post = ({post}) => {
                 <Button 
                     style={{color: 'white'}} 
                     size="small"
-                    onClick={() => handleEditId(currentId)}
+                    onClick={() => handleEditId(post._id)}
                 >
                     <MoreHorizIcon fontSize="default"/>
                 </Button>
@@ -49,7 +47,7 @@ const Post = ({post}) => {
                 <Typography variant="h6" gutterBottom>{post.message}</Typography>
             </CardContent>
             <CardActions className={classes.cardActions}>
-                <Button coolor="primary" size="small">
+                <Button coolor="primary" size="small" onClick={() => handleLike(post._id)}>
                     <ThumbUpAltIcon fontSize="small"/>
                     Like {post.likeCount}
                 </Button>

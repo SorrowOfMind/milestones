@@ -15,6 +15,7 @@ const postReducer = (state = initState, action) => {
         case 'RESET_POST_ID':
             return {...state, currentPost: ''}
         case 'UPDATE_POST':
+        case 'LIKE_POST':
             let updatedPosts = state.allPosts.map(post => post._id === action.payload._id ? action.payload: post);
             return {...state, allPosts: updatedPosts};
         case 'DELETE_POST':

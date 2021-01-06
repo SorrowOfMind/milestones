@@ -52,4 +52,19 @@ const deletePost = async (req, res) => {
     }
 }
 
-module.exports = {getPosts, createPost, editPost, deletePost}
+const likePost = async (req, res) => {
+    const {id} = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) res.status(404).send("Unrecognized id");
+
+    try {
+        const post = await Post.findById(id);
+        const updatedPost = await Post.findByIdAndUpdate(id, {likeCount: post.likeCount + 1}, {new: true});
+        res.status(200).json(updatedPost);
+    } catch (error) {
+        console.log(error.message);
+        res.status(409).json({message: error.message});
+    }
+}
+
+module.exports = {getPosts, createPost, editPost, deletePost, likePost}
