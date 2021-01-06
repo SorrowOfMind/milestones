@@ -10,7 +10,7 @@ const Form = () => {
         creator: '',
         title: '',
         message: '',
-        tags: '',
+        tags: [],
         selectedFile: ''
     });
     const classes = useStyles();
@@ -26,20 +26,17 @@ const Form = () => {
         e.preventDefault();
         
         if (post.creator && post.title && post.message){
-            if (currentId){
-                dispatch(updatePost(currentId, post));
-                dispatch({type: 'RESET_POST_ID'});
-            } else {
-                // const tags = post.tags.split(',');
-                // setPost({...post, tags});
-                dispatch(createPost(post));
-            }
+            if (currentId) dispatch(updatePost(currentId, post));
+            else dispatch(createPost(post));
             clearInputs();
         }
     }
 
     const handleChange = e => {
-        const {name, value} = e.target;
+        let {name, value} = e.target;
+
+        if (name === 'tags') value = value.split(',').map(tag => tag.trim());
+        
         setPost(prevPost => ({...prevPost, [name]: value}));
     }
 
@@ -47,7 +44,7 @@ const Form = () => {
         creator: '',
         title: '',
         message: '',
-        tags: '',
+        tags: [],
         selectedFile: ''
     });
 
