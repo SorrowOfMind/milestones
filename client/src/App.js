@@ -18,12 +18,12 @@ function App() {
   return (
     <Container maxwidth="lg">
       <AppBar color="inherit" position="static" className={classes.appBar}>
-        <Typography className={classes.heading} variant="h2" align="center">Milestones</Typography>
-        <img className={classes.image} src={photo} alt="milestones" height="60"/>
+        <Typography className={classes.heading} variant="h3" align="center">Milestones</Typography>
+        <img className={classes.image} src={photo} alt="milestones" height="50"/>
       </AppBar>
       <Grow in >
         <Container>
-          <Grid container spacing={3} justify="space-between" alignItems="stretch">
+          <Grid className={classes.mainContainer} container spacing={3} justify="space-between" alignItems="stretch">
             <Grid item xs={12} sm={7}>
               <Posts />
             </Grid>
