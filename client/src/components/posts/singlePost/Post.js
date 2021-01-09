@@ -49,11 +49,11 @@ const Post = ({post}) => {
             <CardActions className={classes.cardActions}>
                 <Button coolor="primary" size="small" onClick={() => handleLike(post._id)}>
                     <ThumbUpAltIcon fontSize="small"/>
-                    Like {post.likeCount}
+                    &nbsp; Like {post.likeCount}
                 </Button>
                 <Button coolor="primary" size="small" onClick={() => handleDelete(post._id)}>
                     <DeleteIcon fontSize="small"/>
-                    Delete
+                    &nbsp; Delete
                 </Button>
             </CardActions>
         </Card>
